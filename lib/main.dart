@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'features/auth/presentation/signup_page.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://fcxkjhxsdpronlgusoor.supabase.co',
+    anonKey: 'sb_publishable_ARqdKbr7eLRCsngnTOD3bQ_Qk9LFJCl',
+  );
   runApp(const MyApp());
 }
 
@@ -11,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DKSRecipe',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home:  SignUpPage(),
     );
   }
 }
