@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'features/auth/presentation/signup_page.dart';
+import 'features/auth/presentation/welcome_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DKSRecipe',
       debugShowCheckedModeBanner: false,
-      home:  SignUpPage(),
+      home:  WelcomePage(),
     );
   }
 }
