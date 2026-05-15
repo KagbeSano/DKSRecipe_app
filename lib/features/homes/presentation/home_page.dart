@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'accueil_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,12 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   final List pages = [
 
-    const Center(
-      child: Text(
-        "Accueil",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
+    const AccueilPage(),
 
     const Center(
       child: Text(
