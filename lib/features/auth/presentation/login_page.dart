@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'signup_page.dart';
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   static const Color backgroundBeige = Color(0xFFF5EFE6);
   static const Color orangePrimary = Color(0xFFE8903A);
@@ -14,27 +15,23 @@ class SignupPage extends StatelessWidget {
       backgroundColor: backgroundBeige,
 
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
 
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
-
-              const SizedBox(height: 40),
-
               // Logo
-              Image.asset(
-                'assets/images/logo.png',
-                height: 100,
-              ),
+              Image.asset('assets/images/logo.png', height: 110),
 
               const SizedBox(height: 20),
 
               // Titre
               const Text(
-                "Créer un compte",
+                "Connexion",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                   color: brownTitle,
                 ),
@@ -43,35 +40,14 @@ class SignupPage extends StatelessWidget {
               const SizedBox(height: 8),
 
               const Text(
-                "Rejoignez la communauté DKSRecipe.",
+                "Connectez-vous pour accéder à vos recettes.",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: greySubtitle,
-                ),
+                style: TextStyle(fontSize: 14, color: greySubtitle),
               ),
 
               const SizedBox(height: 40),
 
-              // Nom
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Nom complet",
-                  prefixIcon: const Icon(Icons.person_outline),
-
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Email
+              // Champ email
               TextField(
                 decoration: InputDecoration(
                   hintText: "Email",
@@ -89,7 +65,7 @@ class SignupPage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // Mot de passe
+              // Champ mot de passe
               TextField(
                 obscureText: true,
 
@@ -107,35 +83,38 @@ class SignupPage extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 14),
 
-              // Confirmation mot de passe
-              TextField(
-                obscureText: true,
+              // Mot de passe oublié
+              Align(
+                alignment: Alignment.centerRight,
 
-                decoration: InputDecoration(
-                  hintText: "Confirmer le mot de passe",
-                  prefixIcon: const Icon(Icons.lock_reset_outlined),
+                child: TextButton(
+                  onPressed: () {},
 
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                  child: const Text(
+                    "Mot de passe oublié ?",
+                    style: TextStyle(color: orangePrimary),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
-              // Bouton inscription
+              // Bouton connexion
               SizedBox(
                 width: double.infinity,
                 height: 55,
 
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignupPage(),
+                      ),
+                    );
+                  },
 
                   style: ElevatedButton.styleFrom(
                     backgroundColor: orangePrimary,
@@ -146,7 +125,7 @@ class SignupPage extends StatelessWidget {
                   ),
 
                   child: const Text(
-                    "Créer un compte",
+                    "Se connecter",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -158,35 +137,28 @@ class SignupPage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // Retour connexion
+              // Lien inscription
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
 
                 children: [
-
-                  const Text(
-                    "Vous avez déjà un compte ?",
-                  ),
+                  const Text("Vous n'avez pas de compte ?"),
 
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      // Navigation signup
                     },
 
                     child: const Text(
-                      "Se connecter",
+                      "S'inscrire",
                       style: TextStyle(
                         color: orangePrimary,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-
                 ],
               ),
-
-              const SizedBox(height: 30),
-
             ],
           ),
         ),
