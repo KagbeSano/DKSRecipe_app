@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../recipes/data/recipe_model.dart';
+import '../../recipes/data/recipe_data.dart';
+import '../../recipes/presentation/recipe_detail_page.dart';
+
 
 class AccueilPage extends StatelessWidget {
   const AccueilPage({super.key});
@@ -9,24 +13,18 @@ class AccueilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: SingleChildScrollView(
-
         padding: const EdgeInsets.all(20),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-
             // Bonjour
             const Text(
               "Bonjour 👋",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 18, color: Colors.grey),
             ),
 
             const SizedBox(height: 6),
@@ -64,10 +62,7 @@ class AccueilPage extends StatelessWidget {
             // Catégories
             const Text(
               "Catégories",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 16),
@@ -79,13 +74,11 @@ class AccueilPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
 
                 children: [
-
                   categoryItem("Africain"),
                   categoryItem("Dessert"),
                   categoryItem("Vegan"),
                   categoryItem("Boisson"),
                   categoryItem("Rapide"),
-
                 ],
               ),
             ),
@@ -95,28 +88,32 @@ class AccueilPage extends StatelessWidget {
             // Recettes populaires
             const Text(
               "Recettes populaires",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 18),
 
-            recipeCard(
-              image: 'assets/images/food.png',
-              title: 'Poulet DG',
-              duration: '45 min',
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+
+              itemCount: recipes.length,
+
+              itemBuilder: (context, index) {
+                final RecipeModel recipe = recipes[index];
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+
+                  child: recipeCard(
+                    context: context,
+                    image: recipe.image,
+                    title: recipe.title,
+                    duration: recipe.duration,
+                  ),
+                );
+              },
             ),
-
-            const SizedBox(height: 20),
-
-            recipeCard(
-              image: 'assets/images/food.png',
-              title: 'Salade fraîche',
-              duration: '15 min',
-            ),
-
           ],
         ),
       ),
@@ -125,7 +122,6 @@ class AccueilPage extends StatelessWidget {
 
   // Widget catégorie
   Widget categoryItem(String title) {
-
     return Container(
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -149,27 +145,30 @@ class AccueilPage extends StatelessWidget {
 
   // Widget recette
   Widget recipeCard({
+    required BuildContext context,
     required String image,
     required String title,
     required String duration,
   }) {
-
-    return Container(
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-      ),
-
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RecipeDetailsPage(
+              title: title,
+              image: image,
+              duration: duration,
+            ),
+          ),
+        );
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(24),
-            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
 
             child: Image.asset(
               image,
@@ -186,7 +185,6 @@ class AccueilPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-
                 Text(
                   title,
                   style: const TextStyle(
@@ -199,29 +197,16 @@ class AccueilPage extends StatelessWidget {
 
                 Row(
                   children: [
-
-                    const Icon(
-                      Icons.access_time,
-                      size: 18,
-                      color: Colors.grey,
-                    ),
+                    const Icon(Icons.access_time, size: 18, color: Colors.grey),
 
                     const SizedBox(width: 6),
 
-                    Text(
-                      duration,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-
+                    Text(duration, style: const TextStyle(color: Colors.grey)),
                   ],
                 ),
-
               ],
             ),
           ),
-
         ],
       ),
     );
