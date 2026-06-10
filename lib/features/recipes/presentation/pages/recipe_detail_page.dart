@@ -1,42 +1,30 @@
 import 'package:flutter/material.dart';
+import '../../data/recipe_model.dart';
+import '../widgets/ingredient_item.dart';
 
 class RecipeDetailsPage extends StatelessWidget {
+  final RecipeModel recipe;
 
-  final String title;
-  final String image;
-  final String duration;
-
-  const RecipeDetailsPage({
-    super.key,
-    required this.title,
-    required this.image,
-    required this.duration,
-  });
+  const RecipeDetailsPage({super.key, required this.recipe});
 
   static const Color backgroundBeige = Color(0xFFF5EFE6);
-  static const Color orangePrimary = Color(0xFFE8903A);
   static const Color brownTitle = Color(0xFF4A2C0A);
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: backgroundBeige,
 
       body: SingleChildScrollView(
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-
             // Image recette
             Stack(
               children: [
-
                 Image.asset(
-                  image,
+                  recipe.image,
                   width: double.infinity,
                   height: 320,
                   fit: BoxFit.cover,
@@ -58,7 +46,6 @@ class RecipeDetailsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
 
@@ -69,10 +56,9 @@ class RecipeDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-
                   // Titre
                   Text(
-                    title,
+                    recipe.title,
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -85,27 +71,19 @@ class RecipeDetailsPage extends StatelessWidget {
                   // Infos
                   Row(
                     children: [
-
-                      const Icon(
-                        Icons.access_time,
-                        color: Colors.grey,
-                      ),
+                      const Icon(Icons.access_time, color: Colors.grey),
 
                       const SizedBox(width: 6),
 
-                      Text(duration),
+                      Text(recipe.duration),
 
                       const SizedBox(width: 24),
 
-                      const Icon(
-                        Icons.star,
-                        color: Colors.orange,
-                      ),
+                      const Icon(Icons.star, color: Colors.orange),
 
                       const SizedBox(width: 6),
 
                       const Text("Facile"),
-
                     ],
                   ),
 
@@ -114,77 +92,46 @@ class RecipeDetailsPage extends StatelessWidget {
                   // Ingrédients
                   const Text(
                     "Ingrédients",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
 
                   const SizedBox(height: 16),
-
-                  ingredientItem("2 tomates"),
-                  ingredientItem("1 oignon"),
-                  ingredientItem("Poulet"),
-                  ingredientItem("Huile"),
-                  ingredientItem("Sel"),
-
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: recipe.ingredients.map((ingredient) {
+                      return IngredientItem(ingredient: ingredient);
+                    }).toList(),
+                  ),
                   const SizedBox(height: 30),
 
                   // Préparation
                   const Text(
                     "Préparation",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
 
                   const SizedBox(height: 16),
 
-                  const Text(
-                    "1. Couper les légumes.\n\n"
-                    "2. Faire chauffer l’huile.\n\n"
-                    "3. Ajouter le poulet.\n\n"
-                    "4. Cuire pendant 45 minutes.\n\n"
-                    "5. Servir chaud.",
-                    style: TextStyle(
-                      fontSize: 16,
-                      height: 1.7,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: List.generate(
+                      recipe.steps.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+
+                        child: Text(
+                          "${index + 1}. ${recipe.steps[index]}",
+                          style: const TextStyle(fontSize: 16, height: 1.6),
+                        ),
+                      ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
           ],
         ),
-      ),
-    );
-  }
-
-  Widget ingredientItem(String ingredient) {
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-
-      child: Row(
-        children: [
-
-          const Icon(
-            Icons.check_circle,
-            color: orangePrimary,
-            size: 20,
-          ),
-
-          const SizedBox(width: 10),
-
-          Text(
-            ingredient,
-            style: const TextStyle(fontSize: 16),
-          ),
-
-        ],
       ),
     );
   }
