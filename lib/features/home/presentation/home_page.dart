@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'accueil_page.dart';
+import '../../recipes/presentation/pages/add_recipe_page.dart';
+import '../../search/search_page.dart';
+import '../../favorites/favorites_page.dart';
+import '../../profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,41 +13,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int currentIndex = 0;
 
-  final List pages = [
-
+  late final List<Widget> pages = [
     const AccueilPage(),
-
-    const Center(
-      child: Text(
-        "Recherche",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-
-    const Center(
-      child: Text(
-        "Ajouter une recette",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-
-    const Center(
-      child: Text(
-        "Favoris",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-
-    const Center(
-      child: Text(
-        "Profil",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-
+    const SearchPage(),
+    const AddRecipePage(),
+    const FavoritesPage(),
+    const ProfilePage(),
   ];
 
   static const Color backgroundBeige = Color(0xFFF5EFE6);
@@ -51,15 +28,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: backgroundBeige,
 
       body: pages[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-
         currentIndex: currentIndex,
 
         onTap: (index) {
@@ -74,16 +48,9 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.grey,
 
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Accueil"),
 
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Accueil",
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Recherche",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Recherche"),
 
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle_outline),
@@ -99,7 +66,6 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.person_outline),
             label: "Profil",
           ),
-
         ],
       ),
     );

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
   final String category;
+  final bool isSelected;
 
   const CategoryItem({
     super.key,
-    required this.category
+    required this.category,
+    required this.isSelected,
   });
 
   @override
@@ -15,7 +17,7 @@ class CategoryItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18),
 
       decoration: BoxDecoration(
-        color: const Color(0xFFE8903A),
+        color: isSelected ? const Color(0xFF4A2C0A) : const Color(0xFFE8903A),
         borderRadius: BorderRadius.circular(20),
       ),
 

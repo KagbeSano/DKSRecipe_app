@@ -6,6 +6,7 @@ final List<RecipeModel> recipes = [
     image: "assets/images/food.png",
     duration: "45 min",
     category: "Plat",
+    isFavorite: true,
     ingredients: ["Poulet", "Plantain", "Oignons", "Huile", "Sel"],
 
     steps: [
@@ -51,6 +52,7 @@ final List<RecipeModel> recipes = [
     image: "assets/images/food.png",
     duration: "20 min",
     category: "Rapide",
+    isFavorite: true,
     ingredients: ["Pain", "Viande", "Fromage", "Laitue", "Tomate", "Oignon"],
     steps: [
       "Préchauffer le gril.",

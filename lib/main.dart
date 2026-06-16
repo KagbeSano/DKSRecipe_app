@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'features/auth/presentation/welcome_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: 'https://fcxkjhxsdpronlgusoor.supabase.co',
     anonKey: 'sb_publishable_ARqdKbr7eLRCsngnTOD3bQ_Qk9LFJCl',
   );
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DKSRecipe',
       debugShowCheckedModeBanner: false,
-      home:  WelcomePage(),
+      home: const WelcomePage(),
     );
   }
 }

@@ -15,25 +15,27 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundBeige,
 
-      body: Column(
-        children: [
-          Expanded(
-            flex: 3, // prend 30 % de la hauteur
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Logo et texte
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 24,
+                ),
+
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/logo.png', height: 90),
+                    Image.asset('assets/images/logo.png', height: 60),
 
                     const SizedBox(height: 12),
 
                     const Text(
                       'DKSRecipe',
                       style: TextStyle(
-                        fontFamily: 'Georgia',
-                        fontSize: 40,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: brownTitle,
                       ),
@@ -42,7 +44,7 @@ class WelcomePage extends StatelessWidget {
                     const SizedBox(height: 10),
 
                     const Text(
-                      'Découvrez, cuisinez\net partagez vos meilleures recettes.',
+                      'Découvrez, cuisinez et partagez\nvos recettes préférées.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 15,
@@ -53,107 +55,85 @@ class WelcomePage extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ),
 
-          Expanded(
-            flex: 4,
-            child: Stack(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Image.asset(
-                    'assets/images/food.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              // Image principale
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
 
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 60,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [backgroundBeige, Colors.transparent],
-                      ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+
+                  child: SizedBox(
+                    height: 220,
+                    width: double.infinity,
+
+                    child: Image.asset(
+                      'assets/images/food.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
+              ),
 
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 60,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [backgroundBeige, Colors.transparent],
-                      ),
+              const SizedBox(height: 30),
+
+              // Boutons
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+
+                child: Column(
+                  children: [
+                    _BoutonPrincipal(
+                      texte: 'Se connecter',
+                      icone: Icons.restaurant,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
                     ),
-                  ),
+
+                    const SizedBox(height: 12),
+
+                    _BoutonSecondaire(
+                      texte: 'Créer un compte',
+                      icone: Icons.person_add_outlined,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignupPage(),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      'Rejoignez la communauté des passionnés de cuisine !',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, color: greySubtitle),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    const Icon(
+                      Icons.favorite_border,
+                      color: orangePrimary,
+                      size: 20,
+                    ),
+
+                    const SizedBox(height: 20),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 32),
-            child: Column(
-              children: [
-                _BoutonPrincipal(
-                  texte: 'Se connecter',
-                  icone: Icons.restaurant,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 12),
-
-                _BoutonSecondaire(
-                  texte: 'Créer un compte',
-                  icone: Icons.person_add_outlined,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignupPage(),
-                      ),
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 16),
-
-                const Text(
-                  'Rejoignez la communauté des passionnés de cuisine !',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12, color: greySubtitle),
-                ),
-
-                const SizedBox(height: 8),
-
-                const Icon(
-                  Icons.favorite_border,
-                  color: orangePrimary,
-                  size: 20,
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -175,9 +155,12 @@ class _BoutonPrincipal extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 54,
+
       child: ElevatedButton.icon(
         onPressed: onPressed,
+
         icon: Icon(icone, color: Colors.white, size: 22),
+
         label: Text(
           texte,
           style: const TextStyle(
@@ -186,11 +169,12 @@ class _BoutonPrincipal extends StatelessWidget {
             color: Colors.white,
           ),
         ),
+
         style: ElevatedButton.styleFrom(
           backgroundColor: WelcomePage.orangePrimary,
-          elevation: 0,
+
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // bord arrondi (pill)
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
       ),
@@ -214,9 +198,12 @@ class _BoutonSecondaire extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 54,
+
       child: OutlinedButton.icon(
         onPressed: onPressed,
+
         icon: Icon(icone, color: WelcomePage.orangePrimary, size: 22),
+
         label: Text(
           texte,
           style: const TextStyle(
@@ -225,8 +212,10 @@ class _BoutonSecondaire extends StatelessWidget {
             color: WelcomePage.orangePrimary,
           ),
         ),
+
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: WelcomePage.orangePrimary, width: 1.5),
+
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),

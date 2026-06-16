@@ -14,16 +14,29 @@ class AccueilPage extends StatefulWidget {
 
 class _AccueilPageState extends State<AccueilPage> {
   String selectedCategory = "Toutes";
-  
+  String recipeSearch = "";
+  final List<String> categories = [
+    "Toutes",
+    "Plat",
+    "Entrée",
+    "Dessert",
+    "Boisson",
+    "Rapide",
+  ];
   static const Color brownTitle = Color(0xFF4A2C0A);
 
   @override
   Widget build(BuildContext context) {
-    final filteredRecipes = selectedCategory == "Toutes"
-        ? recipes
-        : recipes.where((recipe) {
-            return recipe.category == selectedCategory;
-          }).toList();
+    final filteredRecipes = recipes.where((recipe) {
+      final categoryMatch =
+          selectedCategory == "Toutes" || recipe.category == selectedCategory;
+
+      final searchMatch = recipe.title.toLowerCase().contains(
+        recipeSearch.toLowerCase(),
+      );
+
+      return categoryMatch && searchMatch;
+    }).toList();
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -53,6 +66,11 @@ class _AccueilPageState extends State<AccueilPage> {
 
             // Barre de recherche
             TextField(
+              onChanged: (value) {
+                setState(() {
+                  recipeSearch = value;
+                });
+              },
               decoration: InputDecoration(
                 hintText: "Rechercher une recette...",
 
@@ -81,59 +99,26 @@ class _AccueilPageState extends State<AccueilPage> {
             SizedBox(
               height: 45,
 
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
 
-                children: [
-                  GestureDetector(
+                itemBuilder: (context, index) {
+                  String category = categories[index];
+
+                  return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedCategory = "Toutes";
+                        selectedCategory = category;
                       });
                     },
-                    child: const CategoryItem(category: "Toutes"),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = "Plat";
-                      });
-                    },
-                    child: const CategoryItem(category: "Plat"),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = "Entrée";
-                      });
-                    },
-                    child: const CategoryItem(category: "Entrée"),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = "Dessert";
-                      });
-                    },
-                    child: const CategoryItem(category: "Dessert"),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = "Boisson";
-                      });
-                    },
-                    child: const CategoryItem(category: "Boisson"),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedCategory = "Rapide";
-                      });
-                    },
-                    child: const CategoryItem(category: "Rapide"),
-                  ),
-                ],
+
+                    child: CategoryItem(
+                      category: category,
+                      isSelected: selectedCategory == category,
+                    ),
+                  );
+                },
               ),
             ),
 
@@ -147,33 +132,40 @@ class _AccueilPageState extends State<AccueilPage> {
 
             const SizedBox(height: 18),
 
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
+            filteredRecipes.isEmpty
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(30),
+                      child: Text(
+                        "Aucune recette trouvée",
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filteredRecipes.length,
+                    itemBuilder: (context, index) {
+                      final RecipeModel recipe = filteredRecipes[index];
 
-              itemCount: filteredRecipes.length,
-
-              itemBuilder: (context, index) {
-                final RecipeModel recipe = filteredRecipes[index];
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-
-                  child: RecipeCard(
-                    recipe: recipe,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              RecipeDetailsPage(recipe: recipe),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: RecipeCard(
+                          recipe: recipe,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    RecipeDetailsPage(recipe: recipe),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
                   ),
-                );
-              },
-            ),
           ],
         ),
       ),

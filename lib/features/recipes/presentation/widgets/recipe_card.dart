@@ -5,11 +5,7 @@ class RecipeCard extends StatelessWidget {
   final RecipeModel recipe;
   final VoidCallback onTap;
 
-  const RecipeCard({
-    super.key,
-    required this.recipe,
-    required this.onTap,
-  });
+  const RecipeCard({super.key, required this.recipe, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +17,44 @@ class RecipeCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(24),
 
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 8,
-              color: Colors.black12,
-            ),
-          ],
+          boxShadow: const [BoxShadow(blurRadius: 8, color: Colors.black12)],
         ),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(24),
-              ),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
+                  ),
 
-              child: Image.asset(
-                recipe.image,
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+                  child: Image.asset(
+                    recipe.image,
+                    height: 180,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                Positioned(
+                  top: 10,
+                  right: 10,
+
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+
+                    child: Icon(
+                      recipe.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
             ),
 
             Padding(
@@ -75,9 +86,7 @@ class RecipeCard extends StatelessWidget {
 
                       Text(
                         recipe.duration,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                        ),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     ],
                   ),

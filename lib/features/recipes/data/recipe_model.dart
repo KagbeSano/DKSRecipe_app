@@ -5,6 +5,7 @@ class RecipeModel {
   final String category;
   final List<String> ingredients;
   final List<String> steps;
+  final bool isFavorite;
 
   RecipeModel({
     required this.title,
@@ -13,5 +14,6 @@ class RecipeModel {
     required this.category,
     required this.ingredients,
     required this.steps,
+    this.isFavorite = false,
   });
 }
