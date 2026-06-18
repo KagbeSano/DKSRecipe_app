@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'accueil_page.dart';
+import 'home_screen.dart';
 import '../../recipes/presentation/pages/add_recipe_page.dart';
 import '../../search/search_page.dart';
 import '../../favorites/favorites_page.dart';
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   late final List<Widget> pages = [
-    const AccueilPage(),
+    const HomeScreen(),
     const SearchPage(),
     const AddRecipePage(),
     const FavoritesPage(),

@@ -7,14 +7,14 @@ import '../../recipes/presentation/widgets/recipe_card.dart';
 import '../../recipes/presentation/pages/recipe_detail_page.dart';
 import '../../recipes/presentation/widgets/category_item.dart';
 
-class AccueilPage extends ConsumerStatefulWidget {
-  const AccueilPage({super.key});
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  ConsumerState<AccueilPage> createState() => _AccueilPageState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _AccueilPageState extends ConsumerState<AccueilPage> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   String selectedCategory = "Toutes";
   String recipeSearch = "";
 
