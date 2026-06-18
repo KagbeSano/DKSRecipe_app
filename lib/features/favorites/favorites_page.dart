@@ -13,7 +13,9 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Temporaire
-    final List<RecipeModel> favoriteRecipes = recipes.take(2).toList();
+    final List<RecipeModel> favoriteRecipes = recipes
+        .where((recipe) => recipe.isFavorite)
+        .toList();
 
     return Scaffold(
       backgroundColor: backgroundBeige,
@@ -42,10 +44,7 @@ class FavoritesPage extends StatelessWidget {
                     ? const Center(
                         child: Text(
                           "Aucune recette favorite",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
                       )
                     : ListView.builder(
@@ -65,9 +64,7 @@ class FavoritesPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) =>
-                                        RecipeDetailsPage(
-                                          recipe: recipe,
-                                        ),
+                                        RecipeDetailsPage(recipe: recipe),
                                   ),
                                 );
                               },

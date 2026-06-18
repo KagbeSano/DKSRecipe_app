@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../providers/recipe_provider.dart';
 import '../../recipes/data/recipe_model.dart';
-import '../../recipes/data/recipe_data.dart';
 import '../../recipes/presentation/widgets/recipe_card.dart';
 import '../../recipes/presentation/pages/recipe_detail_page.dart';
 import '../../recipes/presentation/widgets/category_item.dart';
 
-class AccueilPage extends StatefulWidget {
+class AccueilPage extends ConsumerStatefulWidget {
   const AccueilPage({super.key});
 
   @override
-  State<AccueilPage> createState() => _AccueilPageState();
+  ConsumerState<AccueilPage> createState() => _AccueilPageState();
 }
 
-class _AccueilPageState extends State<AccueilPage> {
+class _AccueilPageState extends ConsumerState<AccueilPage> {
   String selectedCategory = "Toutes";
   String recipeSearch = "";
+
   final List<String> categories = [
     "Toutes",
     "Plat",
@@ -23,13 +26,17 @@ class _AccueilPageState extends State<AccueilPage> {
     "Boisson",
     "Rapide",
   ];
+
   static const Color brownTitle = Color(0xFF4A2C0A);
 
   @override
   Widget build(BuildContext context) {
-    final filteredRecipes = recipes.where((recipe) {
+    final recipesList = ref.watch(recipesProvider);
+
+    final filteredRecipes = recipesList.where((recipe) {
       final categoryMatch =
-          selectedCategory == "Toutes" || recipe.category == selectedCategory;
+          selectedCategory == "Toutes" ||
+          recipe.category == selectedCategory;
 
       final searchMatch = recipe.title.toLowerCase().contains(
         recipeSearch.toLowerCase(),
@@ -37,6 +44,7 @@ class _AccueilPageState extends State<AccueilPage> {
 
       return categoryMatch && searchMatch;
     }).toList();
+
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -45,10 +53,12 @@ class _AccueilPageState extends State<AccueilPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            // Bonjour
             const Text(
               "Bonjour 👋",
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey,
+              ),
             ),
 
             const SizedBox(height: 6),
@@ -64,16 +74,16 @@ class _AccueilPageState extends State<AccueilPage> {
 
             const SizedBox(height: 24),
 
-            // Barre de recherche
+            // Recherche
             TextField(
               onChanged: (value) {
                 setState(() {
                   recipeSearch = value;
                 });
               },
+
               decoration: InputDecoration(
                 hintText: "Rechercher une recette...",
-
                 prefixIcon: const Icon(Icons.search),
 
                 filled: true,
@@ -88,10 +98,12 @@ class _AccueilPageState extends State<AccueilPage> {
 
             const SizedBox(height: 28),
 
-            // Catégories
             const Text(
               "Catégories",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             const SizedBox(height: 16),
@@ -104,7 +116,7 @@ class _AccueilPageState extends State<AccueilPage> {
                 itemCount: categories.length,
 
                 itemBuilder: (context, index) {
-                  String category = categories[index];
+                  final category = categories[index];
 
                   return GestureDetector(
                     onTap: () {
@@ -124,10 +136,12 @@ class _AccueilPageState extends State<AccueilPage> {
 
             const SizedBox(height: 30),
 
-            // Recettes populaires
             const Text(
               "Recettes populaires",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
             ),
 
             const SizedBox(height: 18),
@@ -138,7 +152,10 @@ class _AccueilPageState extends State<AccueilPage> {
                       padding: EdgeInsets.all(30),
                       child: Text(
                         "Aucune recette trouvée",
-                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   )
@@ -146,19 +163,25 @@ class _AccueilPageState extends State<AccueilPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: filteredRecipes.length,
+
                     itemBuilder: (context, index) {
-                      final RecipeModel recipe = filteredRecipes[index];
+                      final RecipeModel recipe =
+                          filteredRecipes[index];
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 20),
+
                         child: RecipeCard(
                           recipe: recipe,
+
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    RecipeDetailsPage(recipe: recipe),
+                                builder: (_) =>
+                                    RecipeDetailsPage(
+                                      recipe: recipe,
+                                    ),
                               ),
                             );
                           },

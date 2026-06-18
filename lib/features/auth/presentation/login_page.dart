@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import '../data/auth_service.dart';
 import 'signup_page.dart';
 import '../../home/presentation/home_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   static const Color backgroundBeige = Color(0xFFF5EFE6);
   static const Color orangePrimary = Color(0xFFE8903A);
   static const Color brownTitle = Color(0xFF4A2C0A);
   static const Color greySubtitle = Color(0xFF8A8A8A);
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,151 +30,190 @@ class LoginPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
 
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              // Logo
-              Image.asset('assets/images/logo.png', height: 110),
+              children: [
+                const SizedBox(height: 60),
 
-              const SizedBox(height: 20),
+                // Logo
+                Image.asset('assets/images/logo.png', height: 110),
 
-              // Titre
-              const Text(
-                "Connexion",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: brownTitle,
-                ),
-              ),
+                const SizedBox(height: 20),
 
-              const SizedBox(height: 8),
-
-              const Text(
-                "Connectez-vous pour accéder à vos recettes.",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: greySubtitle),
-              ),
-
-              const SizedBox(height: 40),
-
-              // Champ email
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  prefixIcon: const Icon(Icons.email_outlined),
-
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
+                // Titre
+                const Text(
+                  "Connexion",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: brownTitle,
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 20),
+                const SizedBox(height: 8),
 
-              // Champ mot de passe
-              TextField(
-                obscureText: true,
-
-                decoration: InputDecoration(
-                  hintText: "Mot de passe",
-                  prefixIcon: const Icon(Icons.lock_outline),
-
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide.none,
-                  ),
+                const Text(
+                  "Connectez-vous pour accéder à vos recettes.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14, color: greySubtitle),
                 ),
-              ),
 
-              const SizedBox(height: 14),
+                const SizedBox(height: 40),
 
-              // Mot de passe oublié
-              Align(
-                alignment: Alignment.centerRight,
+                // Email
+                TextField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
 
-                child: TextButton(
-                  onPressed: () {},
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    prefixIcon: const Icon(Icons.email_outlined),
 
-                  child: const Text(
-                    "Mot de passe oublié ?",
-                    style: TextStyle(color: orangePrimary),
-                  ),
-                ),
-              ),
+                    filled: true,
+                    fillColor: Colors.white,
 
-              const SizedBox(height: 20),
-
-              // Bouton connexion
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: orangePrimary,
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-
-                  child: const Text(
-                    "Se connecter",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
                     ),
                   ),
                 ),
-              ),
 
-              const SizedBox(height: 24),
+                const SizedBox(height: 20),
 
-              // Lien inscription
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // Password
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
 
-                children: [
-                  const Text("Vous n'avez pas de compte ?"),
+                  decoration: InputDecoration(
+                    hintText: "Mot de passe",
+                    prefixIcon: const Icon(Icons.lock_outline),
 
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignupPage(),
-                        ),
-                      );
-                    },
+                    filled: true,
+                    fillColor: Colors.white,
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                Align(
+                  alignment: Alignment.centerRight,
+
+                  child: TextButton(
+                    onPressed: () {},
 
                     child: const Text(
-                      "S'inscrire",
+                      "Mot de passe oublié ?",
+                      style: TextStyle(color: orangePrimary),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // Login Button
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      final messenger = ScaffoldMessenger.of(context);
+                      final navigator = Navigator.of(context);
+
+                      if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        messenger.showSnackBar(
+                          const SnackBar(
+                            content: Text("Veuillez remplir tous les champs"),
+                          ),
+                        );
+                        return;
+                      }
+
+                      try {
+                        final success = await authService.signIn(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                        );
+
+                        if (!mounted) return;
+
+                        if (success) {
+                          navigator.pushReplacement(
+                            MaterialPageRoute(builder: (_) => const HomePage()),
+                          );
+                        } else {
+                          messenger.showSnackBar(
+                            const SnackBar(
+                              content: Text("Email ou mot de passe incorrect"),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        if (!mounted) return;
+
+                        messenger.showSnackBar(
+                          SnackBar(content: Text("Erreur : $e")),
+                        );
+                      }
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: orangePrimary,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+
+                    child: const Text(
+                      "Se connecter",
                       style: TextStyle(
-                        color: orangePrimary,
+                        fontSize: 16,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+
+                const SizedBox(height: 24),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: [
+                    const Text("Vous n'avez pas de compte ?"),
+
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const SignupPage()),
+                        );
+                      },
+
+                      child: const Text(
+                        "S'inscrire",
+                        style: TextStyle(
+                          color: orangePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

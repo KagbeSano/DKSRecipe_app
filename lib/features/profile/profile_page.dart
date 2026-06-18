@@ -9,6 +9,9 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String userName = "Douaya Sano";
+    final String userEmail = "douaya@email.com";
+
     return Scaffold(
       backgroundColor: backgroundBeige,
 
@@ -20,18 +23,21 @@ class ProfilePage extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
 
+              // Photo profil
               const CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage(
-                  "assets/images/profile.jpg",
+                child: Icon(
+                  Icons.person,
+                  size: 50,
                 ),
               ),
 
               const SizedBox(height: 15),
 
-              const Text(
-                "Douaya Sano",
-                style: TextStyle(
+              // Nom utilisateur
+              Text(
+                userName,
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: brownTitle,
@@ -40,16 +46,61 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 5),
 
-              const Text(
-                "douaya@email.com",
-                style: TextStyle(
+              // Email utilisateur
+              Text(
+                userEmail,
+                style: const TextStyle(
                   color: Colors.grey,
+                  fontSize: 16,
                 ),
+              ),
+
+              const SizedBox(height: 25),
+
+              // Statistiques
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "4",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: brownTitle,
+                        ),
+                      ),
+                      Text("Recettes"),
+                    ],
+                  ),
+
+                  SizedBox(width: 50),
+
+                  Column(
+                    children: [
+                      Text(
+                        "2",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: brownTitle,
+                        ),
+                      ),
+                      Text("Favoris"),
+                    ],
+                  ),
+                ],
               ),
 
               const SizedBox(height: 30),
 
+              // Mes recettes
               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
                 child: ListTile(
                   leading: const Icon(Icons.restaurant_menu),
                   title: const Text("Mes recettes"),
@@ -60,7 +111,12 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 10),
 
+              // Mes favoris
               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
                 child: ListTile(
                   leading: const Icon(Icons.favorite),
                   title: const Text("Mes favoris"),
@@ -71,7 +127,12 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 10),
 
+              // Paramètres
               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
                 child: ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text("Paramètres"),
@@ -82,6 +143,7 @@ class ProfilePage extends StatelessWidget {
 
               const Spacer(),
 
+              // Bouton déconnexion
               SizedBox(
                 width: double.infinity,
                 height: 55,
@@ -89,16 +151,32 @@ class ProfilePage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: orangePrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
 
                   onPressed: () {},
 
-                  child: const Text(
-                    "Déconnexion",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+
+                      SizedBox(width: 10),
+
+                      Text(
+                        "Déconnexion",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

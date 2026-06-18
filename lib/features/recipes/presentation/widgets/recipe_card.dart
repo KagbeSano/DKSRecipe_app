@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../data/recipe_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RecipeCard extends StatelessWidget {
+class RecipeCard extends ConsumerWidget {
   final RecipeModel recipe;
   final VoidCallback onTap;
 
   const RecipeCard({super.key, required this.recipe, required this.onTap});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: onTap,
-
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

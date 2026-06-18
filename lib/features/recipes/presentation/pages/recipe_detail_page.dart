@@ -5,9 +5,13 @@ import '../widgets/ingredient_item.dart';
 class RecipeDetailsPage extends StatelessWidget {
   final RecipeModel recipe;
 
-  const RecipeDetailsPage({super.key, required this.recipe});
+  const RecipeDetailsPage({
+    super.key,
+    required this.recipe,
+  });
 
   static const Color backgroundBeige = Color(0xFFF5EFE6);
+  static const Color orangePrimary = Color(0xFFE8903A);
   static const Color brownTitle = Color(0xFF4A2C0A);
 
   @override
@@ -20,7 +24,7 @@ class RecipeDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            // Image recette
+            // IMAGE
             Stack(
               children: [
                 Image.asset(
@@ -33,16 +37,11 @@ class RecipeDetailsPage extends StatelessWidget {
                 Positioned(
                   top: 45,
                   left: 20,
-
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back),
-
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ),
                 ),
@@ -56,7 +55,7 @@ class RecipeDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
-                  // Titre
+                  // TITRE
                   Text(
                     recipe.title,
                     style: const TextStyle(
@@ -66,67 +65,165 @@ class RecipeDetailsPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 12),
 
-                  // Infos
-                  Row(
-                    children: [
-                      const Icon(Icons.access_time, color: Colors.grey),
-
-                      const SizedBox(width: 6),
-
-                      Text(recipe.duration),
-
-                      const SizedBox(width: 24),
-
-                      const Icon(Icons.star, color: Colors.orange),
-
-                      const SizedBox(width: 6),
-
-                      const Text("Facile"),
-                    ],
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // Ingrédients
-                  const Text(
-                    "Ingrédients",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-
-                  const SizedBox(height: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: recipe.ingredients.map((ingredient) {
-                      return IngredientItem(ingredient: ingredient);
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 30),
-
-                  // Préparation
-                  const Text(
-                    "Préparation",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: List.generate(
-                      recipe.steps.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-
-                        child: Text(
-                          "${index + 1}. ${recipe.steps[index]}",
-                          style: const TextStyle(fontSize: 16, height: 1.6),
-                        ),
-                      ),
+                  // DESCRIPTION
+                  Text(
+                    recipe.description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                      height: 1.5,
                     ),
                   ),
+
+                  const SizedBox(height: 20),
+
+                  // INFOS
+                  Container(
+                    padding: const EdgeInsets.all(16),
+
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceAround,
+
+                      children: [
+                        Column(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: orangePrimary,
+                            ),
+                            SizedBox(height: 5),
+                            Text(recipe.duration),
+                          ],
+                        ),
+
+                        Column(
+                          children: [
+                            Icon(
+                              Icons.restaurant,
+                              color: orangePrimary,
+                            ),
+                            SizedBox(height: 5),
+                            Text(recipe.category),
+                          ],
+                        ),
+
+                        Column(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: orangePrimary,
+                            ),
+                            SizedBox(height: 5),
+                            Text("Easy"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // INGREDIENTS
+                  const Text(
+                    "Ingredients",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
+
+                    children: recipe.ingredients.map(
+                      (ingredient) {
+                        return IngredientItem(
+                          ingredient: ingredient,
+                        );
+                      },
+                    ).toList(),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // PREPARATION
+                  const Text(
+                    "Preparation",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  Column(
+                    children: List.generate(
+                      recipe.steps.length,
+                      (index) {
+                        return Container(
+                          margin:
+                              const EdgeInsets.only(bottom: 15),
+
+                          padding: const EdgeInsets.all(15),
+
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.circular(16),
+                          ),
+
+                          child: Row(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+
+                            children: [
+                              CircleAvatar(
+                                backgroundColor:
+                                    orangePrimary,
+                                radius: 14,
+
+                                child: Text(
+                                  "${index + 1}",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 12),
+
+                              Expanded(
+                                child: Text(
+                                  recipe.steps[index],
+                                  style:
+                                      const TextStyle(
+                                    fontSize: 16,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

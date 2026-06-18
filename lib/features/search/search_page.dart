@@ -20,9 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final filteredRecipes = recipes.where((recipe) {
-      return recipe.title.toLowerCase().contains(
-        searchText.toLowerCase(),
-      );
+      return recipe.title.toLowerCase().contains(searchText.toLowerCase());
     }).toList();
 
     return Scaffold(
@@ -67,22 +65,23 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
+
+              Text(
+                "${filteredRecipes.length} résultat(s)",
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+
+              const SizedBox(height: 15),
 
               Expanded(
                 child: filteredRecipes.isEmpty
-                    ? const Center(
-                        child: Text(
-                          "Aucune recette trouvée",
-                        ),
-                      )
+                    ? const Center(child: Text("Aucune recette trouvée"))
                     : ListView.builder(
                         itemCount: filteredRecipes.length,
 
                         itemBuilder: (context, index) {
-                          final RecipeModel recipe =
-                              filteredRecipes[index];
+                          final RecipeModel recipe = filteredRecipes[index];
 
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -95,9 +94,7 @@ class _SearchPageState extends State<SearchPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) =>
-                                        RecipeDetailsPage(
-                                          recipe: recipe,
-                                        ),
+                                        RecipeDetailsPage(recipe: recipe),
                                   ),
                                 );
                               },
