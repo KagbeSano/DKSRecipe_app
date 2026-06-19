@@ -8,6 +8,24 @@ class RecipeNotifier extends StateNotifier<List<RecipeModel>> {
   void addRecipe(RecipeModel recipe) {
     state = [...state, recipe];
   }
+
+  void toggleFavorite(String title) {
+    state = state.map((recipe) {
+      if (recipe.title == title) {
+        return RecipeModel(
+          title: recipe.title,
+          description: recipe.description,
+          image: recipe.image,
+          duration: recipe.duration,
+          category: recipe.category,
+          ingredients: recipe.ingredients,
+          steps: recipe.steps,
+          isFavorite: !recipe.isFavorite,
+        );
+      }
+      return recipe;
+    }).toList();
+  }
 }
 
 final recipesProvider =

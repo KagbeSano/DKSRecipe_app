@@ -15,12 +15,10 @@ class CategoryItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.symmetric(horizontal: 18),
-
       decoration: BoxDecoration(
         color: isSelected ? const Color(0xFF4A2C0A) : const Color(0xFFE8903A),
         borderRadius: BorderRadius.circular(20),
       ),
-
       child: Center(
         child: Text(
           category,
