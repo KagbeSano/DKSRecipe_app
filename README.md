@@ -159,9 +159,14 @@ flutter run
 - Recipe ratings
 - Recipe sharing
 - Advanced search filters
+- Supabase integration
 
 ---
+## 🎯 Design Patterns
 
+### Observer Pattern
+Implemented using Riverpod state management.
+-- -
 ## 👩‍💻 Author
 
 **Douaya Kagbe Sano**
