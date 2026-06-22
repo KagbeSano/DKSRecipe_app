@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../home/presentation/home_screen.dart';
+import '../favorites/favorites_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -26,10 +28,7 @@ class ProfilePage extends StatelessWidget {
               // Photo profil
               const CircleAvatar(
                 radius: 50,
-                child: Icon(
-                  Icons.person,
-                  size: 50,
-                ),
+                child: Icon(Icons.person, size: 50),
               ),
 
               const SizedBox(height: 15),
@@ -49,10 +48,7 @@ class ProfilePage extends StatelessWidget {
               // Email utilisateur
               Text(
                 userEmail,
-                style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                ),
+                style: const TextStyle(color: Colors.grey, fontSize: 16),
               ),
 
               const SizedBox(height: 25),
@@ -105,7 +101,14 @@ class ProfilePage extends StatelessWidget {
                   leading: const Icon(Icons.restaurant_menu),
                   title: const Text("Mes recettes"),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
 
@@ -121,7 +124,14 @@ class ProfilePage extends StatelessWidget {
                   leading: const Icon(Icons.favorite),
                   title: const Text("Mes favoris"),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FavoritesPage(),
+                      ),
+                    );
+                  },
                 ),
               ),
 
@@ -157,14 +167,10 @@ class ProfilePage extends StatelessWidget {
                   ),
 
                   onPressed: () {},
-
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ),
+                      Icon(Icons.logout, color: Colors.white),
 
                       SizedBox(width: 10),
 
