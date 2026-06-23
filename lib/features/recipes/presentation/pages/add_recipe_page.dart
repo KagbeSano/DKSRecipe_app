@@ -35,7 +35,7 @@ class _AddRecipePageState extends ConsumerState<AddRecipePage> {
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
-    durationController.dispose();
+    durationController.dispose();  //libère la mémoire 
     ingredientsController.dispose();
     stepsController.dispose();
     super.dispose();

@@ -25,7 +25,7 @@ class _SignupPageState extends State<SignupPage> {
   void dispose() {
     fullNameController.dispose();
     emailController.dispose();
-    passwordController.dispose();
+    passwordController.dispose();//libère la mémoire
     confirmPasswordController.dispose();
     super.dispose();
   }
